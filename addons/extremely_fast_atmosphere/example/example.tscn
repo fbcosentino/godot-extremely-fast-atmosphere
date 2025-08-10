@@ -1,0 +1,148 @@
+[gd_scene load_steps=28 format=3 uid="uid://cbbpvtedavyg0"]
+
+[ext_resource type="Texture2D" uid="uid://yxh8pspuqdrf" path="res://addons/extremely_fast_atmosphere/example/nasa_blue_marble.png" id="1_rpngx"]
+[ext_resource type="PackedScene" uid="uid://bb0fma643hacs" path="res://addons/extremely_fast_atmosphere/atmosphere/atmosphere.tscn" id="2_0886a"]
+[ext_resource type="Shader" uid="uid://dsu80023m2ier" path="res://addons/extremely_fast_atmosphere/atmosphere/atmosphere_fbcosentino.gdshader" id="3_be5yx"]
+
+[sub_resource type="Environment" id="Environment_0886a"]
+background_mode = 1
+ambient_light_source = 1
+
+[sub_resource type="SphereMesh" id="SphereMesh_iqlna"]
+radius = 100.0
+height = 200.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0886a"]
+albedo_texture = ExtResource("1_rpngx")
+
+[sub_resource type="Gradient" id="Gradient_0886a"]
+offsets = PackedFloat32Array(0.12362, 0.214128, 0.295806, 0.540839)
+colors = PackedColorArray(0.0873382, 1.82897e-06, 0.450119, 1, 0, 0.711, 0.79, 1, 0.79, 0.73075, 0.395, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_be5yx"]
+gradient = SubResource("Gradient_0886a")
+
+[sub_resource type="Curve" id="Curve_t4e3p"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.503191, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_dr3ne"]
+curve = SubResource("Curve_t4e3p")
+
+[sub_resource type="Gradient" id="Gradient_wapma"]
+offsets = PackedFloat32Array(0.377551, 0.530612, 0.632653)
+colors = PackedColorArray(0, 0, 0, 1, 0.98, 0.711317, 0.5194, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ix4h0"]
+gradient = SubResource("Gradient_wapma")
+
+[sub_resource type="Gradient" id="Gradient_185l3"]
+offsets = PackedFloat32Array(0, 0.0133929, 0.102041, 0.557823, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 0.199517, 0.159956, 1, 1, 0.904724, 0.795297, 1, 0.79, 0.716267, 0.632, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7bg17"]
+gradient = SubResource("Gradient_185l3")
+
+[sub_resource type="Curve" id="Curve_bq1bu"]
+_data = [Vector2(0, 1), 0.0, -5.45596, 0, 0, Vector2(0.246888, 0.330739), -1.25032, -1.25032, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_tymoi"]
+curve = SubResource("Curve_bq1bu")
+
+[sub_resource type="Gradient" id="Gradient_ahkau"]
+offsets = PackedFloat32Array(0, 0.102679)
+colors = PackedColorArray(0.74, 0.943667, 1, 1, 0.408134, 0.79353, 0.99759, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vq3m7"]
+gradient = SubResource("Gradient_ahkau")
+
+[sub_resource type="Gradient" id="Gradient_dqftq"]
+colors = PackedColorArray(1.49205e-06, 0.489553, 0.503481, 1, 0, 0.45, 0.45, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_yiibj"]
+gradient = SubResource("Gradient_dqftq")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ig6hw"]
+render_priority = 2
+shader = ExtResource("3_be5yx")
+shader_parameter/height_profile_curve = SubResource("CurveTexture_tymoi")
+shader_parameter/height_profile_main_colors = SubResource("GradientTexture1D_vq3m7")
+shader_parameter/height_profile_back_colors = SubResource("GradientTexture1D_7bg17")
+shader_parameter/direction_profile_curve = SubResource("CurveTexture_dr3ne")
+shader_parameter/direction_profile_main_colors = SubResource("GradientTexture1D_ix4h0")
+shader_parameter/direction_profile_back_colors = SubResource("GradientTexture1D_be5yx")
+shader_parameter/water_depth_profile_colors = SubResource("GradientTexture1D_yiibj")
+shader_parameter/sea_level = 101.0
+shader_parameter/atmosphere_radius = 121.0
+shader_parameter/atmosphere_density = 0.2
+shader_parameter/water_density_factor = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_dr3ne"]
+flip_faces = true
+size = Vector3(254.1, 254.1, 254.1)
+
+[sub_resource type="GDScript" id="GDScript_0886a"]
+script/source = "@tool
+extends Node3D
+
+@export var target_node: Node3D # Ideally a camera
+
+func _physics_process(delta: float) -> void:
+	if target_node:
+		look_at(target_node.global_position)
+"
+
+[sub_resource type="Gradient" id="Gradient_be5yx"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.064693, 0.0767544, 0.109479, 0.136182, 0.206943, 0.339119, 1)
+colors = PackedColorArray(1, 1, 0.886275, 1, 1, 1, 0.870588, 1, 1, 1, 0.807843, 0.329412, 1, 1, 0.809025, 0.163249, 1, 1, 0.814508, 0.0901659, 1, 1, 0.81937, 0.0404353, 1, 1, 0.821633, 0.018269, 1, 1, 0.823529, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_t4e3p"]
+gradient = SubResource("Gradient_be5yx")
+width = 256
+height = 256
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dr3ne"]
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("GradientTexture2D_t4e3p")
+
+[sub_resource type="QuadMesh" id="QuadMesh_wapma"]
+size = Vector2(800, 800)
+
+[node name="Example" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0886a")
+
+[node name="Planet" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_iqlna")
+surface_material_override/0 = SubResource("StandardMaterial3D_0886a")
+
+[node name="Atmosphere" parent="." node_paths=PackedStringArray("sun_object") instance=ExtResource("2_0886a")]
+transform = Transform3D(-0.316344, 0.321255, -0.892593, 0, 0.940914, 0.338646, 0.948645, 0.107129, -0.297652, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_ig6hw")
+mesh = SubResource("BoxMesh_dr3ne")
+planet_radius = 101.0
+atmosphere_height = 20.0
+sun_object = NodePath("../Sun_Move_Me_Around/SunMesh")
+
+[node name="Sun_Move_Me_Around" type="Node3D" parent="." node_paths=PackedStringArray("target_node")]
+transform = Transform3D(-0.316344, 0.321255, -0.892593, 0, 0.940914, 0.338646, 0.948645, 0.107129, -0.297652, -1143.65, 433.896, -381.372)
+script = SubResource("GDScript_0886a")
+target_node = NodePath("../Planet")
+metadata/_edit_group_ = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Sun_Move_Me_Around"]
+metadata/_edit_lock_ = true
+
+[node name="SunMesh" type="MeshInstance3D" parent="Sun_Move_Me_Around"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_dr3ne")
+mesh = SubResource("QuadMesh_wapma")
+metadata/_edit_lock_ = true

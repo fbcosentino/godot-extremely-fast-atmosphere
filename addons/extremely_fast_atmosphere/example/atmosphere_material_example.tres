@@ -1,0 +1,65 @@
+[gd_resource type="ShaderMaterial" load_steps=16 format=3 uid="uid://bxy405rk64i2m"]
+
+[ext_resource type="Shader" uid="uid://dsu80023m2ier" path="res://addons/extremely_fast_atmosphere/atmosphere/atmosphere_fbcosentino.gdshader" id="1_oa70m"]
+
+[sub_resource type="Gradient" id="Gradient_xic72"]
+offsets = PackedFloat32Array(0.503401, 0.57483)
+colors = PackedColorArray(0.0873382, 1.82897e-06, 0.450119, 1, 0, 0.791469, 0.587378, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_svp2f"]
+gradient = SubResource("Gradient_xic72")
+
+[sub_resource type="Curve" id="Curve_5ml4i"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.421162, 0.206226), 1.05027, 1.05027, 0, 0, Vector2(0.574689, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_lu4wd"]
+curve = SubResource("Curve_5ml4i")
+
+[sub_resource type="Gradient" id="Gradient_lu4wd"]
+offsets = PackedFloat32Array(0.377551, 0.530612, 0.632653)
+colors = PackedColorArray(0, 0, 0, 1, 0.98, 0.711317, 0.5194, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wgkob"]
+gradient = SubResource("Gradient_lu4wd")
+
+[sub_resource type="Gradient" id="Gradient_5ml4i"]
+offsets = PackedFloat32Array(0, 0.0133929, 0.102041, 0.557823, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 0.199517, 0.159956, 1, 1, 0.904724, 0.795297, 1, 0.79, 0.716267, 0.632, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_lu4wd"]
+gradient = SubResource("Gradient_5ml4i")
+
+[sub_resource type="Curve" id="Curve_wgkob"]
+_data = [Vector2(0, 1), 0.0, -5.45596, 0, 0, Vector2(0.246888, 0.330739), -1.25032, -1.25032, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_xic72"]
+curve = SubResource("Curve_wgkob")
+
+[sub_resource type="Gradient" id="Gradient_wgkob"]
+offsets = PackedFloat32Array(0, 0.102679)
+colors = PackedColorArray(0.74, 0.943667, 1, 1, 0.408134, 0.79353, 0.99759, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xic72"]
+gradient = SubResource("Gradient_wgkob")
+
+[sub_resource type="Gradient" id="Gradient_xekog"]
+colors = PackedColorArray(1.49205e-06, 0.489553, 0.503481, 1, 0, 0.45, 0.45, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_en63l"]
+gradient = SubResource("Gradient_xekog")
+
+[resource]
+render_priority = 2
+shader = ExtResource("1_oa70m")
+shader_parameter/height_profile_curve = SubResource("CurveTexture_xic72")
+shader_parameter/height_profile_main_colors = SubResource("GradientTexture1D_xic72")
+shader_parameter/height_profile_back_colors = SubResource("GradientTexture1D_lu4wd")
+shader_parameter/direction_profile_curve = SubResource("CurveTexture_lu4wd")
+shader_parameter/direction_profile_main_colors = SubResource("GradientTexture1D_wgkob")
+shader_parameter/direction_profile_back_colors = SubResource("GradientTexture1D_svp2f")
+shader_parameter/water_depth_profile_colors = SubResource("GradientTexture1D_en63l")
+shader_parameter/sea_level = 100.0
+shader_parameter/atmosphere_radius = 110.0
+shader_parameter/water_density_factor = 1.0
